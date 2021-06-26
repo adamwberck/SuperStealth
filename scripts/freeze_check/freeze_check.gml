@@ -1,7 +1,11 @@
-function freeze_check(){//TODO Freeze Animation
+function freeze_check(delay_alarms){//TODO Freeze Animation
 	if(global.freeze){
-		for(var i = 0; i < 11; i++){
-			alarm[i] = alarm[i] + 1;
+		if(delay_alarms){
+			for(var i = 0; i < 11; i++){
+				if(alarm[i]!=-1){
+					alarm[i]++;
+				}
+			}
 		}
 		return true;
 	}

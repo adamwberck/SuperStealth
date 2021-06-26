@@ -6,16 +6,20 @@
 #region Set Globals
 	global.freeze = true;
 	global.size = 32;
-	global.sub_room = 5;
+	global.sub_room = 8;
 	global.AIR_FRIC = .4;
 	global.GRND_FRIC = .6;
 
 	enum GuardAI{
 		patrol,
-		interested,
+		distracted,
+		investigating,
+		searching,
 		returning,
 		alerted,
-		attacking
+		attacking,
 	}
 
+	global.grid = mp_grid_create(0, 0, global.sub_room, global.sub_room, global.size, global.size);
+	mp_grid_add_instances(global.grid, parSolid, false);
 #endregion
