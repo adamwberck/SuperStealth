@@ -1,10 +1,10 @@
 {
   "spriteId": {
-    "name": "sDirector",
-    "path": "sprites/sDirector/sDirector.yy",
+    "name": "sDiamond",
+    "path": "sprites/sDiamond/sDiamond.yy",
   },
   "solid": false,
-  "visible": false,
+  "visible": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": null,
@@ -21,17 +21,16 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
-    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":0,"eventType":4,"collisionObjectId":{"name":"Thief","path":"objects/Thief/Thief.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "Item",
+    "path": "folders/Objects/Item.yy",
   },
   "resourceVersion": "1.0",
-  "name": "Director",
+  "name": "Diamond",
   "tags": [],
   "resourceType": "GMObject",
 }

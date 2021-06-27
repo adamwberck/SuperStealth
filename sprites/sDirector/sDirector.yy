@@ -17,8 +17,8 @@
   "width": 32,
   "height": 32,
   "textureGroupId": {
-    "name": "Default",
-    "path": "texturegroups/Default",
+    "name": "DebugGroup",
+    "path": "texturegroups/DebugGroup",
   },
   "swatchColours": null,
   "gridX": 0,

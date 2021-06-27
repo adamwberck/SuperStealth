@@ -67,16 +67,14 @@ draw_set_color(c_white);
 		draw_set_alpha(.6);
 		draw_line_width(x, y, x + lengthdir_x(map[?dir], dir), y + lengthdir_y(map[?dir], dir), 3);
 	}
-	
-	draw_set_color(c_green);
 
-	
+	/*draw_set_color(c_green);
 	for(var i=0; i < ds_list_size(memory_x); i++){
 		var xx = memory_x[|i];
 		var yy = memory_y[|i];
 		draw_set_alpha(mem_t_frac(i));
 		draw_rectangle(xx - 2, yy - 2, xx + 2, yy + 2, false);
-	}
+	}*/
 	
 	draw_set_color(c_white);
 	draw_set_alpha(1.0);

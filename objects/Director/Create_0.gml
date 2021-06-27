@@ -9,6 +9,7 @@
 	global.sub_room = 9;
 	global.AIR_FRIC = .4;
 	global.GRND_FRIC = .6;
+	global.diamonds = 0;
 
 	enum GuardAI{
 		patrolling,
