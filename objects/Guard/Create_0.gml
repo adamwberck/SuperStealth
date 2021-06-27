@@ -9,6 +9,43 @@ memory_x = ds_list_create();
 memory_y = ds_list_create();
 memory_t = ds_list_create();
 
+
+function mem_t_frac(index){
+	return max( 0, (MEMORY_FADE - t + memory_t[|index]) / MEMORY_FADE); 
+}
+
+function hunt_location(){
+	var p_c = false;
+	var r = 9;//furthest hunt
+	var c = 3;//too close hunt
+	var k = 0;
+	var s = global.size;
+	var w = room_width, h = room_height;
+	#region random next hunt place
+	while(!p_c){
+		var sx = floor(x / s), sy = floor(y / s);
+		var lx = max( -sx, -r), hx = min(  ( (w-x) div s),  r);//random square close but in range
+		var ly = max( -sy, -r), hy = min(  ( (h-y) div s),  r);
+		if(chance(.5)){
+			var rx = sx + irandom_range_ex(lx, hx, c), ry = sy + irandom_range(ly, hy);
+		}
+		else{
+			var rx = sx + irandom_range(lx, hx), ry = sy + irandom_range_ex(ly, hy, c);
+		}
+		rx = rx * s + s div 2; ry = ry * s + s div 2;
+		var index = ds_lists_find_index(memory_x, rx, memory_y, ry);
+		var t_frac = index == -1 ? 0 : mem_t_frac(index);
+		if(t_frac <= k ){
+			p_c = set_path_to_point(rx, ry);
+		}
+		k += .01;
+	}
+	#endregion
+	pind = 0;
+	set_px_py();//set px and py
+}
+
+
 function get_firetime(){
 	static num = -1;
 	num = (num + 1) mod 3;
@@ -23,6 +60,7 @@ function get_firetime(){
 
 function set_path_to_point(x1, y1){
 	gx = x1; gy = y1;
+	pind = 0;
 	path_created = mp_grid_path(global.grid, path, x, y, x1, y1, true);
 	return path_created;
 }
@@ -30,7 +68,7 @@ function set_path_to_point(x1, y1){
 function turn_follow_path(){
 	var goal_dir = point_direction(x, y, px, py);
 	dir = angle_approach(dir, DIR_SPD, goal_dir);
-	if(dir == goal_dir){
+	if(angle_equals(dir, goal_dir)){
 		x = px; y = py;
 		return set_px_py();//true if end of path
 	}
@@ -41,7 +79,7 @@ function follow_path(){
 	var goal_dir = point_direction(x, y, px, py);
 	dir = angle_approach(dir, DIR_SPD, goal_dir);
 	x = px; y = py;
-	return set_px_py();//true if end of path
+	return  set_px_py() and angle_equals(dir, goal_dir);//true if end of path
 }
 
 

@@ -3,6 +3,7 @@ if(freeze_check(false)){
 	exit;
 }
 
+
 switch(ai){
 	case GuardAI.patrol:
 		spd = WALK_SPD;
@@ -19,7 +20,7 @@ switch(ai){
 		pind = 0;
 		var goal_dir = point_direction(x, y, gx, gy); 
 		dir = angle_approach(dir, DIR_SPD, goal_dir);
-		if(dir == goal_dir){
+		if( angle_equals(dir, goal_dir) ){
 			//stare at distraction
 			if(!staring){
 				staring  = true;
@@ -47,7 +48,7 @@ switch(ai){
 		if(search_stage == 1 or search_stage == 3){//turn left
 			var dir_goal = search_stage == 1 ? dir_left : dir_right;
 			dir = angle_approach(dir, DIR_SPD, dir_goal);
-			if(dir == dir_goal){
+			if(angle_equals(dir, dir_goal)){
 				//advance stage and delay
 				search_stage++;
 				alarm[1] = distract_time;
@@ -67,11 +68,16 @@ switch(ai){
 	case GuardAI.alerted:
 		//path to goal fast
 		spd = MAX_SPD;
+		search_stage = 0;
 		if(follow_path()){
 			search_stage = 0;
 			ai = GuardAI.searching;
 			next_ai = GuardAI.hunting;
 		}
+		break;
+	case GuardAI.hunting:
+		ai = GuardAI.alerted;
+		hunt_location();
 		break;
 	case GuardAI.attacking:
 		//fire weapon
@@ -86,7 +92,7 @@ switch(ai){
 		if(!collide and (dis < 200) ){
 			var dir_goal = point_direction(x, y, tx, ty);
 			dir = angle_approach(dir, 3, dir_goal);
-			if(dir == dir_goal and can_fire){
+			if(angle_equals(dir, dir_goal) and can_fire){
 				var b = instance_create_depth(x, y, depth-1, Bullet);
 				b.image_angle = dir;
 				can_fire = false;
