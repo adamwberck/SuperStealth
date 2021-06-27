@@ -2,7 +2,7 @@
 draw_self();
 draw_path(path, x, y, true);
 draw_set_color(c_purple);
-draw_rectangle(px-4,py-4,px+4,py+4,false);
+draw_rectangle(gx-4,gy-4,gx+4,gy+4,false);
 draw_set_color(c_white);
 
 #region draw_flashlight
@@ -18,13 +18,63 @@ draw_set_color(c_white);
 											  y + lengthdir_y(len, a), 
 										 Thief, false, false) != noone;
 	}
-	draw_set_alpha(0.4);
-	draw_set_color(thief ? c_red : c_yellow);
+	draw_set_alpha(0.2);
+	var k = 0;
 	for(var a = dir - angle; a < dir + angle; a++){
 		var b = a + 1;
-		draw_triangle(x, y, x + lengthdir_x(map[?a], a), y + lengthdir_y(map[?a], a),
-							x + lengthdir_x(map[?b], b), y + lengthdir_y(map[?b], b), false);
+		
+		var color = between(a, dir - 15, dir + 15) ? c_yellow : c_ltgray;
+		draw_set_color(thief ? c_red : color);
+		var x2 = x + lengthdir_x(map[?a], a);
+		var y2 = y + lengthdir_y(map[?a], a);
+		var x3 = x + lengthdir_x(map[?b], b);
+		var y3 = y + lengthdir_y(map[?b], b);
+		draw_triangle(x, y, x2, y2, x3, y3, false);
+		var cap_len = max(map[?a], map[?b]); 
+		var cap_x = x + lengthdir_x( cap_len, a), s = global.size;
+		var cap_y = y + lengthdir_y( cap_len, a);
+		#region rember what you have seen
+		if(!freeze_check(false)){
+			for(var i = floor_to_n(x, s) + s/2 ; i != cap_x; i = approach(i, s, cap_x) ){
+				for(var j = floor_to_n(y, s) + s/2 ; j != cap_y; j = approach(j, s, cap_y) ){
+					if(point_in_triangle(i, j, x, y, x2, y2, x3, y3)){
+						var index = ds_lists_find_index(memory_x, i, memory_y, j);
+						if(index == -1){
+							ds_list_add(memory_x, i);
+							ds_list_add(memory_y, j);
+							ds_list_add(memory_t, t);
+						}
+						else{
+							memory_t[|index] = t;//update time
+						}
+					}
+					//qdbug(string(k++) + " | " + string(i)+" "+string(j));
+				}
+			}
+		}
+		#endregion
 	}
+	
+	if(thief){
+		ai = GuardAI.attacking;	
+		draw_set_color(c_red);
+		draw_set_alpha(.6);
+		draw_line_width(x, y, x + lengthdir_x(map[?dir], dir), y + lengthdir_y(map[?dir], dir), 3);
+	}
+	
+	draw_set_color(c_green);
+
+	
+	for(var i=0; i < ds_list_size(memory_x); i++){
+		var xx = memory_x[|i];
+		var yy = memory_y[|i];
+		var tt = memory_t[|i];
+		draw_set_alpha(max( (360-t+tt)/360 , 0));
+		draw_rectangle(xx - 2, yy - 2, xx + 2, yy + 2, false);
+	}
+	
 	draw_set_color(c_white);
 	draw_set_alpha(1.0);
 #endregion
+
+ds_map_destroy(map);

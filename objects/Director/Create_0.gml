@@ -6,7 +6,7 @@
 #region Set Globals
 	global.freeze = true;
 	global.size = 32;
-	global.sub_room = 8;
+	global.sub_room = 9;
 	global.AIR_FRIC = .4;
 	global.GRND_FRIC = .6;
 
@@ -18,8 +18,9 @@
 		returning,
 		alerted,
 		attacking,
+		hunting
 	}
 
-	global.grid = mp_grid_create(0, 0, global.sub_room, global.sub_room, global.size, global.size);
+	global.grid = mp_grid_create(-32, -32, global.sub_room, global.sub_room, global.size, global.size);
 	mp_grid_add_instances(global.grid, parSolid, false);
 #endregion

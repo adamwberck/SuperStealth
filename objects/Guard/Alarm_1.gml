@@ -1,2 +1,4 @@
 /// @description Advance Search Stage
-search_stage++;
+if(ai == GuardAI.searching){
+	search_stage++;
+}
