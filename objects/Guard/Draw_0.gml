@@ -16,8 +16,8 @@ draw_set_color(c_white);
 	for(var a = dir - angle; a <= dir + angle; a++){
 		map[?a] = flash_light_col(len, 0, dis, a);
 		len = map[?a];
-		var c_l = collision_line(x, y, x + lengthdir_x(len, a), y + lengthdir_y(len, a),
-										 Thief, false, false) != noone;
+		var c_l = collision_line_z(x, y, x + lengthdir_x(len, a), y + lengthdir_y(len, a), z,
+									 Thief, false, false)
 		if (between(a, dir - notice, dir + notice)){
 			thief = thief or c_l;
 		}
@@ -74,7 +74,6 @@ draw_set_color(c_white);
 	for(var i=0; i < ds_list_size(memory_x); i++){
 		var xx = memory_x[|i];
 		var yy = memory_y[|i];
-		var tt = memory_t[|i];
 		draw_set_alpha(mem_t_frac(i));
 		draw_rectangle(xx - 2, yy - 2, xx + 2, yy + 2, false);
 	}

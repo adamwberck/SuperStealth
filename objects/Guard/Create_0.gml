@@ -95,18 +95,18 @@ function set_px_py(){// set px and py returns true if at end of path
 
 function flash_light_col(start, _min, _max, angle){
 	for(var i = start; i >= _min; i--){// go backwards to find the closest
-		var collision = collision_line(x, y, x + lengthdir_x(i, angle), 
-										 y + lengthdir_y(i, angle), 
-										 parSolid, false, false) != noone;
+		var collision = collision_line_z(x, y, x + lengthdir_x(i, angle), 
+										y + lengthdir_y(i, angle), z - 1,
+										parSolid, false, false);
 		if(!collision){
 			start = i;
 			break;
 		}
 	}
 	for(var i = start; i <= _max; i++){//return the furthest
-		var collision = collision_line(x, y, x + lengthdir_x(i, angle), 
-										 y + lengthdir_y(i, angle), 
-										 parSolid, false, false) != noone;
+		var collision = collision_line_z(x, y, x + lengthdir_x(i, angle), 
+										y + lengthdir_y(i, angle), z - 1, 
+										parSolid, false, false);
 
 		if(collision){
 			return i-1;

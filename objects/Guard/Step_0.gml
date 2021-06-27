@@ -5,7 +5,7 @@ if(freeze_check(false)){
 
 
 switch(ai){
-	case GuardAI.patrol:
+	case GuardAI.patrolling:
 		spd = WALK_SPD;
 		if(!path_created or turn_follow_path()){
 			patrol = patrol == patrola ? patrolb : patrola; 
@@ -63,7 +63,7 @@ switch(ai){
 	case GuardAI.returning:
 		//path to patrol
 		path_created = false;
-		ai = GuardAI.patrol;
+		ai = GuardAI.patrolling;
 		break;
 	case GuardAI.alerted:
 		//path to goal fast
@@ -88,7 +88,7 @@ switch(ai){
 		ty += adj * Thief.vy;
 		search_stage = 0;
 		pind = 0;
-		var collide = collision_line(x, y, tx, ty, parSolid, false, false) != noone;
+		var collide = collision_line_z(x, y, tx, ty, z-1, parSolid, false, false)
 		if(!collide and (dis < 200) ){
 			var dir_goal = point_direction(x, y, tx, ty);
 			dir = angle_approach(dir, 3, dir_goal);

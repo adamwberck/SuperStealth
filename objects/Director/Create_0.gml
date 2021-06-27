@@ -11,7 +11,7 @@
 	global.GRND_FRIC = .6;
 
 	enum GuardAI{
-		patrol,
+		patrolling,
 		distracted,
 		investigating,
 		searching,
@@ -21,6 +21,6 @@
 		hunting
 	}
 
-	global.grid = mp_grid_create(-32, -32, global.sub_room, global.sub_room, global.size, global.size);
+	global.grid = mp_grid_create(-32, -32, (room_width + 32) div global.size, (room_height + 32) div global.size, global.size, global.size);
 	mp_grid_add_instances(global.grid, parSolid, false);
 #endregion
