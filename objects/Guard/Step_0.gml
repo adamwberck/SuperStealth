@@ -3,7 +3,7 @@ if(freeze_check(false)){
 	exit;
 }
 
-
+var distract_time = oblivious ? OBL_DELAY : ALT_DELAY;
 switch(ai){
 	case GuardAI.patrolling:
 		spd = WALK_SPD;
@@ -42,7 +42,8 @@ switch(ai){
 		if(search_stage == 0){//set turn direction
 			dir_left  = dir + 89;
 			dir_right = dir - 89;
-			search_stage = 1;
+			search_dir = chance(.5);
+			search_stage = search_dir ? 1 : 3;
 			
 		}
 		if(search_stage == 1 or search_stage == 3){//turn left
@@ -81,6 +82,7 @@ switch(ai){
 		break;
 	case GuardAI.attacking:
 		//fire weapon
+		oblivious = false;
 		var tx = Thief.x, ty = Thief.y;
 		var dis = instance_distance(x,y,Thief);
 		var adj = dis / 27;

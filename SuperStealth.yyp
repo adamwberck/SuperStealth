@@ -43,6 +43,7 @@
     {"id":{"name":"ds_lists_contains","path":"scripts/ds_lists_contains/ds_lists_contains.yy",},"order":8,},
     {"id":{"name":"move_to_collision","path":"scripts/move_to_collision/move_to_collision.yy",},"order":1,},
     {"id":{"name":"sLow","path":"sprites/sLow/sLow.yy",},"order":3,},
+    {"id":{"name":"SoundObj","path":"objects/SoundObj/SoundObj.yy",},"order":7,},
     {"id":{"name":"angle_approach","path":"scripts/angle_approach/angle_approach.yy",},"order":29,},
     {"id":{"name":"sPatrol","path":"sprites/sPatrol/sPatrol.yy",},"order":3,},
     {"id":{"name":"set_window","path":"scripts/set_window/set_window.yy",},"order":27,},

@@ -1,4 +1,5 @@
 /// @description Draw Self and Path
+image_blend = oblivious ? c_white: c_red;
 draw_self();
 draw_path(path, x, y, true);
 draw_set_color(c_purple);

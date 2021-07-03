@@ -32,4 +32,6 @@ else{// move to collision
 }
 
 //apply friction
-alter_velocity(-min(spd,f),dir);
+var dir = point_direction(0, 0, vx, vy);
+var spd =  point_distance(0, 0, vx, vy);
+alter_velocity(-min(spd,f), dir);
