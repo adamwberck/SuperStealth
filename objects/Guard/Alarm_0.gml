@@ -1,4 +1,10 @@
-/// @description Switch to investigating
-ai = oblivious ? GuardAI.investigating : GuardAI.alerted;
-set_px_py();
+/// @description Switch to travel
 staring = false;
+if(ai == GuardAI.distracted){//go and investigate
+	ai = oblivious ? GuardAI.investigating : GuardAI.alerted;
+	pind = 0;
+	set_px_py();
+}
+else {
+	ai = next_ai;
+}

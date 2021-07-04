@@ -29,8 +29,8 @@
   ],
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "Sound",
+    "path": "folders/Objects/Sound.yy",
   },
   "resourceVersion": "1.0",
   "name": "SoundObj",

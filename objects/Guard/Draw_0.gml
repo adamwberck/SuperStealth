@@ -17,10 +17,16 @@ draw_set_color(c_white);
 	for(var a = dir - angle; a <= dir + angle; a++){
 		map[?a] = flash_light_col(len, 0, dis, a);
 		len = map[?a];
-		var c_l = collision_line_z(x, y, x + lengthdir_x(len, a), y + lengthdir_y(len, a), z,
-									 Thief, false, false)
+		var c_l = collision_line_z(x, y, x + lengthdir_x(len, a), y + lengthdir_y(len, a), z, Thief, false, false);
 		if (between(a, dir - notice, dir + notice)){
 			thief = thief or c_l;
+			if(false and oblivious){//seeing a bullet alerts you
+				var b = collision_line(x, y, x + lengthdir_x(len, a), y + lengthdir_y(len, a), Bullet, false, false);
+				if(b != noone and set_path_to_point(b.gx, b.gy)){
+					oblivious = false;
+					ai = GuardAI.distracted;
+				}
+			}
 		}
 		else{
 			notice_thief = notice_thief or c_l;
@@ -61,21 +67,24 @@ draw_set_color(c_white);
 		}
 		#endregion
 	}
-	
+	see_thief = thief or (notice_thief and see_thief);
+	if(thief and ai != GuardAI.attacking){
+		ai = GuardAI.attacking;
+		//comm_obj_create(x, y, id, Thief.x, Thief.y);
+	}
 	if(thief){
-		ai = GuardAI.attacking;	
 		draw_set_color(c_red);
 		draw_set_alpha(.6);
 		draw_line_width(x, y, x + lengthdir_x(map[?dir], dir), y + lengthdir_y(map[?dir], dir), 3);
 	}
 
-	/*draw_set_color(c_green);
+	draw_set_color(c_green);
 	for(var i=0; i < ds_list_size(memory_x); i++){
 		var xx = memory_x[|i];
 		var yy = memory_y[|i];
 		draw_set_alpha(mem_t_frac(i));
 		draw_rectangle(xx - 2, yy - 2, xx + 2, yy + 2, false);
-	}*/
+	}
 	
 	draw_set_color(c_white);
 	draw_set_alpha(1.0);

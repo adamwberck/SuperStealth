@@ -14,6 +14,7 @@
 	enum GuardAI{
 		patrolling,
 		distracted,
+		looking,
 		investigating,
 		searching,
 		returning,
@@ -25,3 +26,21 @@
 	global.grid = mp_grid_create(-32, -32, (room_width + 32) div global.size, (room_height + 32) div global.size, global.size, global.size);
 	mp_grid_add_instances(global.grid, parSolid, false);
 #endregion
+
+function comm_sound(dist_gs, x, y){ //sets closest gaurd to investigate
+	var dis_lst = ds_list_create();
+	for(var i = 0; i < ds_list_size(dist_gs); i++){
+		dis_lst[|i] = instance_distance(x, y, dist_gs[|i]);
+	}
+	var dis_lst_sort = ds_list_create();
+	ds_list_copy(dis_lst_sort, dis_lst);
+	ds_list_sort(dis_lst_sort, true);
+	var v = dis_lst_sort[|0];//lowest
+	
+	var g0 = dist_gs[|ds_list_find_index(dis_lst, v)];
+	if(g0.set_path_to_point(x, y)){
+		g0.ai = GuardAI.distracted;
+	}
+	ds_list_destroy(dis_lst);
+	ds_list_destroy(dis_lst_sort);
+}

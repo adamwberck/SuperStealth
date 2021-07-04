@@ -14,10 +14,10 @@ switch(ai){
 			set_px_py();//set px and py
 		}
 		break;
+	case GuardAI.looking:
 	case GuardAI.distracted:
 		#region look at distraction before walking to it
 		search_stage = 0;
-		pind = 0;
 		var goal_dir = point_direction(x, y, gx, gy); 
 		dir = angle_approach(dir, DIR_SPD, goal_dir);
 		if( angle_equals(dir, goal_dir) ){
@@ -90,21 +90,23 @@ switch(ai){
 		ty += adj * Thief.vy;
 		search_stage = 0;
 		pind = 0;
-		var collide = collision_line_z(x, y, tx, ty, z-1, parSolid, false, false)
-		if(!collide and (dis < 200) ){
+		//var collide = collision_line_z(x, y, tx, ty, z-1, parSolid, false, false)
+		if(see_thief){
 			var dir_goal = point_direction(x, y, tx, ty);
 			dir = angle_approach(dir, 3, dir_goal);
 			if(angle_equals(dir, dir_goal) and can_fire){
 				var b = instance_create_depth(x, y, depth-1, Bullet);
 				b.image_angle = dir;
+				b.gx = tx; b.gy = ty;
 				can_fire = false;
 				alarm[2] = get_firetime();
 			}
 		}
 		else{
-			set_path_to_point(Thief.x + Thief.vx, Thief.y + Thief.vy);
-			ai = GuardAI.alerted;
-			set_px_py();
+			if(set_path_to_point(Thief.x + Thief.vx, Thief.y + Thief.vy)){
+				ai = GuardAI.alerted;
+				set_px_py();
+			}
 		}
 		break;
 }

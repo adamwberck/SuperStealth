@@ -59,7 +59,7 @@ function get_firetime(){
 }
 
 function set_path_to_point(x1, y1){
-	gx = x1; gy = y1;
+	gx = center_cords(x1); gy = center_cords(y1);
 	pind = 0;
 	path_created = mp_grid_path(global.grid, path, x, y, x1, y1, true);
 	return path_created;
