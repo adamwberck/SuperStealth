@@ -38,9 +38,7 @@ function comm_sound(dist_gs, x, y){ //sets closest gaurd to investigate
 	var v = dis_lst_sort[|0];//lowest
 	
 	var g0 = dist_gs[|ds_list_find_index(dis_lst, v)];
-	if(g0.set_path_to_point(x, y)){
-		g0.ai = GuardAI.distracted;
-	}
+	g0.distracted_to_point(x, y);
 	ds_list_destroy(dis_lst);
 	ds_list_destroy(dis_lst_sort);
 }

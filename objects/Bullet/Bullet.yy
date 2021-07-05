@@ -32,7 +32,7 @@
   "overriddenProperties": [
     {"propertyId":{"name":"fragile","path":"objects/parEntity/parEntity.yy",},"objectId":{"name":"parEntity","path":"objects/parEntity/parEntity.yy",},"value":"True","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
     {"propertyId":{"name":"z","path":"objects/parEntity/parEntity.yy",},"objectId":{"name":"parEntity","path":"objects/parEntity/parEntity.yy",},"value":"-1","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
-    {"propertyId":{"name":"MAX_SPD","path":"objects/parEntity/parEntity.yy",},"objectId":{"name":"parEntity","path":"objects/parEntity/parEntity.yy",},"value":"5","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
+    {"propertyId":{"name":"MAX_SPD","path":"objects/parEntity/parEntity.yy",},"objectId":{"name":"parEntity","path":"objects/parEntity/parEntity.yy",},"value":"5.5","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
   ],
   "parent": {
     "name": "Guard",

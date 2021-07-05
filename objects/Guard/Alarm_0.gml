@@ -5,6 +5,6 @@ if(ai == GuardAI.distracted){//go and investigate
 	pind = 0;
 	set_px_py();
 }
-else {
+else if(ai == GuardAI.looking) {
 	ai = next_ai;
 }

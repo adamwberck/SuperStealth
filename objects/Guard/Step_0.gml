@@ -7,11 +7,10 @@ var distract_time = oblivious ? OBL_DELAY : ALT_DELAY;
 switch(ai){
 	case GuardAI.patrolling:
 		spd = WALK_SPD;
-		if(!path_created or turn_follow_path()){
-			patrol = patrol == patrola ? patrolb : patrola; 
-			set_path_to_point(patrol.x, patrol.y);
-			pind = 0;
-			set_px_py();//set px and py
+		if(alarm[3] == -1){
+			if(!path_created or turn_follow_path() and alarm[3] ==-1){
+				alarm[3] = distract_time;//set alarm
+			}
 		}
 		break;
 	case GuardAI.looking:
@@ -65,6 +64,7 @@ switch(ai){
 		//path to patrol
 		path_created = false;
 		ai = GuardAI.patrolling;
+		patrol = instance_distance(x, y, patrola) > instance_distance(x, y, patrolb) ? patrola : patrolb;
 		break;
 	case GuardAI.alerted:
 		//path to goal fast

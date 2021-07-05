@@ -10,33 +10,40 @@ memory_y = ds_list_create();
 memory_t = ds_list_create();
 
 
+
+function distracted_to_point(x, y){
+	if(set_path_to_point(Thief.x, Thief.y)){
+		ai = GuardAI.distracted;
+		return true;
+	}
+	return false;
+}
+
+
 function mem_t_frac(index){
 	return max( 0, (MEMORY_FADE - t + memory_t[|index]) / MEMORY_FADE); 
 }
 
 function hunt_location(){
 	var p_c = false;
-	var r = 9;//furthest hunt
+	var h = 9;//furthest hunt
 	var c = 3;//too close hunt
 	var k = 0;
 	var s = global.size;
-	var w = room_width, h = room_height;
 	#region random next hunt place
 	while(!p_c){
-		var sx = floor(x / s), sy = floor(y / s);
-		var lx = max( -sx, -r), hx = min(  ( (w-x) div s),  r);//random square close but in range
-		var ly = max( -sy, -r), hy = min(  ( (h-y) div s),  r);
-		if(chance(.5)){
-			var rx = sx + irandom_range_ex(lx, hx, c), ry = sy + irandom_range(ly, hy);
-		}
-		else{
-			var rx = sx + irandom_range(lx, hx), ry = sy + irandom_range_ex(ly, hy, c);
-		}
-		rx = rx * s + s div 2; ry = ry * s + s div 2;
-		var index = ds_lists_find_index(memory_x, rx, memory_y, ry);
-		var t_frac = index == -1 ? 0 : mem_t_frac(index);
-		if(t_frac <= k ){
-			p_c = set_path_to_point(rx, ry);
+		var t = random(360);
+		var A = 2 / (sqr(h*s) - sqr(c*s));
+		var p = sqrt(2*random(1)/A + sqr(c*s));
+		qdbug(string(t) + " " + string(p))
+		var rx = center_cords(x + lengthdir_x( p, t)), ry = center_cords(y + lengthdir_y( p, t));
+		//rx = rx * s + s div 2; ry = ry * s + s div 2;
+		if(rx>0 and rx<room_width and ry>0 and ry<room_height){
+			var index = ds_lists_find_index(memory_x, rx, memory_y, ry);
+			var t_frac = index == -1 ? 0 : mem_t_frac(index);
+			if(t_frac <= k ){
+				p_c = set_path_to_point(rx, ry);
+			}
 		}
 		k += .01;
 	}
@@ -61,7 +68,7 @@ function get_firetime(){
 function set_path_to_point(x1, y1){
 	gx = center_cords(x1); gy = center_cords(y1);
 	pind = 0;
-	path_created = mp_grid_path(global.grid, path, x, y, x1, y1, true);
+	path_created = mp_grid_path(global.grid, path, x, y, gx, gy, true);
 	return path_created;
 }
 
